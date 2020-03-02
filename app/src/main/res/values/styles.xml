@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#803300</item>
+        <item name="colorPrimaryDark">#b34700</item>
+        <item name="colorAccent">#666978</item>
+        <item name="backgroundColorOverall">#FFF</item>
+        <item name="tintColor">#000</item>
+        <item name="colorControlNormal">#4c4c4c</item>
+        <item name="colorControlActivated">#3c3c3c</item>
+        <item name="colorControlHighlight">#2c2c2c</item>
+        <item name="backgroundOverlay">#DAFFFFFF</item>
+        <item name="primaryTextColor">#000</item>
+        <item name="secondaryTextColor">#393939</item>
+        <item name="transparentTheme">#8c8c8c</item>
+        <item name="backgroundText">@drawable/gradient_back_light</item>
+
+        <item name="loading">loading_light.json</item>
+
+        <item name="android:statusBarColor">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

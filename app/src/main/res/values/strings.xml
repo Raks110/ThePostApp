@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">The Post</string>
+    <string name="title_home">Home</string>
+    <string name="title_events">Events</string>
+    <string name="title_slcm">SLcM</string>
+    <string name="title_notices">Notices</string>
+
+    <string name="read_more">Read More</string>
+    <string name="password_not_stored">Read our Privacy Policy to understand our data usage.</string>
+
+    <string name="default_notification_channel_id">general_fcm</string>
+    <string name="default_notification_channel_name">General</string>
+    <string name="title_activity_magazine_list">MagazineListActivity</string>
+
+</resources>

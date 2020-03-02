@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ThePostAppTheme">
+
+        <attr name="backgroundColorOverall" format="color"/>
+        <attr name="backgroundOverlay" format="color"/>
+        <attr name="tintColor" format="color"/>
+        <attr name="primaryTextColor" format="color"/>
+        <attr name="secondaryTextColor" format="color"/>
+        <attr name="loading" format="string"/>
+        <attr name="backgroundText" format="integer"/>
+        <attr name="transparentTheme" format="color"/>
+
+        <attr name="appBarColor" format="color"/>
+        <attr name="dialogBackground" format="color"/>
+        <attr name="linkColor" format="color"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="backgroundTextRadial" format="integer"/>
+        <attr name="splashImage" format="integer"/>
+        <attr name="darkBackEditText" format="color"/>
+    </declare-styleable>
+
+</resources>

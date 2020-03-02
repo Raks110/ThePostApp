@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.thepost.app"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "2.0-beta"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Basic Components
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //Easy implementation of Bottom Sheets
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+    //Retrofit for communication with backend
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    //Image Loading and Viewing Libraries
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.bogdwellers:pinchtozoom:0.1'
+
+    //Formats time in a user interpretable way
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
+    //Animated JSONs to display
+    implementation 'com.airbnb.android:lottie:3.0.1'
+
+    //Biometric authentication
+    implementation 'androidx.biometric:biometric:1.0.1'
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    //PDF Viewing
+    implementation 'es.voghdev.pdfviewpager:library:1.1.0'
+    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
+
+
+    //Legacy modules
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/backgroundColorOverall"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="32dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingTop="48dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/notice_full_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/karla_family"
+                android:autoLink="web"
+                android:gravity="center_vertical|start"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notice_full_view_timestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:gravity="center_vertical|start"
+                android:lineSpacingMultiplier="1.5"
+                android:fontFamily="@font/karla_family"
+                android:paddingTop="8dp"
+                android:paddingBottom="18dp"
+                android:text="@string/app_name"
+                android:textColor="?attr/secondaryTextColor"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/notice_full_view_cancel"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:padding="8dp"
+            android:src="@drawable/ic_cancel"
+            android:tint="?attr/primaryTextColor" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:fontFamily="@font/karla_family"
+                android:text="Add a Reminder"
+                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:drawableStart="@drawable/ic_notices"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/secondaryTextColor" />
+
+            <TextView
+                android:id="@+id/formLink"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/karla_family"
+                android:layout_gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:text="Register for this event"
+                android:paddingBottom="32dp"
+                android:paddingTop="8dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:drawableStart="@drawable/ic_slcm"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/notice_full_view_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/karla_family"
+                android:autoLink="web"
+                android:gravity="center_horizontal"
+                android:lineSpacingMultiplier="1.4"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/locationFind"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/karla_family"
+                android:lineSpacingMultiplier="1.4"
+                android:text="Location"
+                android:paddingBottom="16dp"
+                android:paddingTop="32dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="8dp"
+                android:drawableTint="?attr/colorPrimary"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/notice_full_view_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"/>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="16dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/error"
+                android:visibility="gone"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_error"
+                android:tint="?attr/primaryTextColor"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

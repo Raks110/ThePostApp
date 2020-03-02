@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/articleRecycler"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/backgroundColorOverall"
+    app:cardBackgroundColor="?attr/backgroundColorOverall"
+    app:cardCornerRadius="8dp"
+    android:padding="16dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/articleImage"
+            android:layout_width="match_parent"
+            android:layout_height="236dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/articlesView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="6dp"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="18sp"
+            android:fontFamily="@font/karla_family"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/internalLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:id="@+id/authorView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_gravity="start"
+                android:fontFamily="@font/karla_family"
+                android:textColor="?attr/secondaryTextColor"
+                android:text="@string/app_name"/>
+
+
+            <TextView
+                android:id="@+id/timestampView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="end"
+                android:fontFamily="@font/karla_family"
+                android:textColor="?attr/secondaryTextColor"
+                android:text="@string/app_name"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/articleSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:lineSpacingMultiplier="1.5"
+            android:autoLink="web"
+            android:fontFamily="@font/karla_family"
+            android:textSize="14sp"
+            android:textColor="?attr/primaryTextColor"
+            android:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/articleReadMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="8dp"
+            android:fontFamily="@font/karla_family"
+            android:paddingBottom="18dp"
+            android:lineSpacingMultiplier="1.5"
+            android:autoLink="web"
+            android:textSize="13sp"
+            android:textColor="?attr/secondaryTextColor"
+            android:text="@string/read_more"/>
+
+    </LinearLayout>
+    
+</com.google.android.material.card.MaterialCardView>

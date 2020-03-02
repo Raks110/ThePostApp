@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "119797723841",
+    "firebase_url": "https://mit-post-244d7.firebaseio.com",
+    "project_id": "mit-post-244d7",
+    "storage_bucket": "mit-post-244d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119797723841:android:c1fa6cc169121652209a40",
+        "android_client_info": {
+          "package_name": "com.thepost.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119797723841-jqveeaagk0e0ne2ls0k7sk3rp4cvegdb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW3x6SJtfJlx_U6SxoUaVFf4S1yk-yhyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119797723841-jqveeaagk0e0ne2ls0k7sk3rp4cvegdb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "119797723841-7kt8u2nhrdv7p45n53u1tmbambj5jngc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Tsarshah.apps.TheMitPost"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

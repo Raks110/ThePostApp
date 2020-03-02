@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/labDesc"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="husd sjhdsj dsbfjdjvd knvd nff edn f v k j d fj k v j ld f j v ld s b j v u iedfuewf"
+            android:textColor="?attr/primaryTextColor"/>
+
+        <TextView
+            android:id="@+id/labMarks"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="?attr/primaryTextColor"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider_lab"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#8c8c8c"/>
+
+</LinearLayout>

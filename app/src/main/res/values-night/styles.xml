@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#b34700</item>
+        <item name="colorPrimaryDark">#803300</item>
+        <item name="colorAccent">#666978</item>
+        <item name="backgroundColorOverall">#1c1c1c</item>
+        <item name="tintColor">#FFF</item>
+        <item name="colorControlNormal">#9c9c9c</item>
+        <item name="colorControlActivated">#acacac</item>
+        <item name="colorControlHighlight">#bcbcbc</item>
+        <item name="backgroundOverlay">#DA000000</item>
+        <item name="primaryTextColor">#FFF</item>
+        <item name="secondaryTextColor">#9c9c9c</item>
+        <item name="transparentTheme">#404040</item>
+        <item name="backgroundText">@drawable/gradient_back</item>
+
+        <item name="loading">loading_dark.json</item>
+
+        <item name="android:statusBarColor">#121212</item>
+    </style>
+
+</resources>

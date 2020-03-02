@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detailed_slcm"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/detailed_card_vew_height"
+    android:layout_marginBottom="16dp"
+    android:visibility="gone"
+    app:cardCornerRadius="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="?attr/backgroundColorOverall"
+    app:cardElevation="8dp">
+
+    <LinearLayout
+        android:id="@+id/unfold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/slcmPhotoFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/slcmPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/subjectNameDetailed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/backgroundText"
+                android:lineSpacingMultiplier="1.4"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
+                android:fontFamily="@font/karla_family"
+                android:text="Computer Architecture"
+                android:textAllCaps="false"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="26sp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/detailed_core"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/attendanceDetailed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="CLASSES"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/totalAttendanceDetailed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Absent"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/karla_family"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/totalAbsentDetailed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:text="Percent"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/totalPercentDetailed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="95"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/transparentTheme" />
+
+            <LinearLayout
+                android:id="@+id/assignmentDetailed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:text="Assignment 1"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/assignment1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/karla_family"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:text="Assignment 2"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/assignment2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/karla_family"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:text="Assignment 3"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/assignment3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:fontFamily="@font/karla_family"
+                        android:text="Assignment 4"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/assignment4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/dividerCore"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/transparentTheme" />
+
+            <LinearLayout
+                android:id="@+id/sessionalDetailed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/karla_family"
+                        android:maxLines="1"
+                        android:text="Sessional 1"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/sessional1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:maxLines="1"
+                        android:text="Sessional 2"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/secondaryTextColor"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/sessional2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15"
+                        android:fontFamily="@font/karla_family"
+                        android:textAllCaps="true"
+                        android:textColor="?attr/primaryTextColor"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/dividerCore2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/transparentTheme" />
+
+            <LinearLayout
+                android:id="@+id/totalMarksDetailed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Marks: "
+                    android:fontFamily="@font/karla_family"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:paddingTop="16dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/primaryTextColor"
+                    android:text="50"
+                    android:fontFamily="@font/karla_family"
+                    android:id="@+id/total_marks"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="16dp"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:text="/"
+                    android:paddingTop="16dp"
+                    android:fontFamily="@font/karla_family"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/secondaryTextColor"
+                    android:text="50"
+                    android:fontFamily="@font/karla_family"
+                    android:id="@+id/total_marks_full"
+                    android:paddingTop="16dp"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailed_lab"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/show_empty_lab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="124dp"
+            android:fontFamily="@font/karla_family"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="?attr/secondaryTextColor"
+            android:text="No marks have been uploaded yet."
+            android:gravity="center"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/show_more_lab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View More"
+            android:fontFamily="@font/karla_family"
+            android:elevation="100dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="24dp"
+            android:paddingStart="24dp"
+            android:drawableEnd="@drawable/ic_right_arrow"
+            android:drawablePadding="8dp"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center"
+            android:drawableTint="?attr/primaryTextColor"
+            android:textColor="?attr/primaryTextColor"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

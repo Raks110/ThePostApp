@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColorOverall"
+    android:id="@+id/lab_parent">
+
+    <TextView
+        android:id="@+id/subjectNameLab"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:fontFamily="@font/karla_family"
+        android:text="Computer Networks Lab"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:textColor="?attr/secondaryTextColor"/>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/extraInfo"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:fontFamily="@font/karla_family"
+        android:text="Computer Networks Lab"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textSize="16sp"
+        android:textColor="?attr/primaryTextColor"/>
+
+</LinearLayout>

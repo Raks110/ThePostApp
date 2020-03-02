@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="?attr/backgroundColorOverall"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/logoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:lineSpacingMultiplier="1.4"
+        android:autoLink="web"
+        android:text="Logout"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textColor="?attr/primaryTextColor"/>
+
+    <TextView
+        android:id="@+id/logoutNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="10dp"
+        android:lineSpacingMultiplier="1.4"
+        android:autoLink="web"
+        android:text="You are about to log out of SLCM. Do you want to continue?"
+        android:textSize="16sp"
+        android:textColor="?attr/primaryTextColor"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            app:cornerRadius="24dp"
+            android:text="Logout"
+            android:background="?attr/colorPrimaryDark"
+            android:backgroundTint="?attr/colorPrimaryDark"
+            android:textColor="?attr/tintColor"
+            android:id="@+id/slcm_logout"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/slcm_logout"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            app:cornerRadius="24dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:text="Cancel"
+            android:textColor="?attr/secondaryTextColor"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:id="@+id/slcm_logout_cancel"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
