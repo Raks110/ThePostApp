@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.shockwave.**
+-keep class com.ocpsoft.pretty.time.i18n.**
+-keep class org.ocpsoft.prettytime.i18n.**
+-keepnames class ** implements org.ocpsoft.prettytime.TimeUnit

@@ -2,9 +2,7 @@ package com.thepost.app.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -150,6 +148,8 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
     public void onProgressUpdate(int progress, int total) {
         // You will get download progress here
         // Always on UI Thread so feel free to update your views here
+
+        ((TextView) findViewById(R.id.progress)).setText((progress/total)*100 + "");
     }
 
     @Override

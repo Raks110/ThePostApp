@@ -3,6 +3,7 @@ package com.thepost.app.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -33,7 +35,9 @@ import org.ocpsoft.prettytime.PrettyTime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 import retrofit2.internal.EverythingIsNonNull;
 
@@ -144,80 +148,94 @@ public class ArticlesPagerAdapter extends RecyclerView.Adapter<ArticlesPagerAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        ScrollView cl = (ScrollView) LayoutInflater.from(parent.getContext())
+        NestedScrollView cl = (NestedScrollView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.pager_articles, parent, false);
 
         return new ViewHolder(cl);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+        Handler handler = new Handler();
 
         if(articles.get(position).size() > 0) {
 
-            for(int i=0;i<articles.get(position).size();i++) {
+            final LinearLayout ll = new LinearLayout(holder.itemView.getContext());
+            ll.setOrientation(LinearLayout.VERTICAL);
 
-                final int pos = i;
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
 
-                MaterialCardView cl = (MaterialCardView) LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.rv_articles, (ViewGroup) holder.itemView, false);
+                    for(int i=0;i<articles.get(position).size();i++) {
 
-                ArticleModel am = articles.get(position).get(i);
+                        final int pos = i;
 
-                TextView articlesView = cl.findViewById(R.id.articlesView);
-                TextView timestampView = cl.findViewById(R.id.timestampView);
-                TextView authorView = cl.findViewById(R.id.authorView);
-                ImageView articleImage = cl.findViewById(R.id.articleImage);
-                TextView articleSummary = cl.findViewById(R.id.articleSummary);
+                        MaterialCardView cl = (MaterialCardView) LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.rv_articles, (ViewGroup) holder.itemView, false);
 
-                articlesView.setText(Html.fromHtml(am.getTitle()));
+                        ArticleModel am = articles.get(position).get(i);
 
-                Date amd = am.getDate();
-                String datetime = amd.getMonth().substring(0, 3) + " " + amd.getDay() + ", " + amd.getYear();
+                        TextView articlesView = cl.findViewById(R.id.articlesView);
+                        TextView timestampView = cl.findViewById(R.id.timestampView);
+                        TextView authorView = cl.findViewById(R.id.authorView);
+                        ImageView articleImage = cl.findViewById(R.id.articleImage);
+                        TextView articleSummary = cl.findViewById(R.id.articleSummary);
 
-                java.util.Date date;
+                        articlesView.setText(Html.fromHtml(am.getTitle()));
 
-                try {
-                    date = new SimpleDateFormat("MMM dd, yyyy").parse(datetime);
-                } catch (ParseException e) {
+                        Date amd = am.getDate();
+                        String datetime = amd.getMonth().substring(0, 3) + " " + amd.getDay() + ", " + amd.getYear();
 
-                    date = new java.util.Date();
-                }
-                PrettyTime prettyTime = new PrettyTime();
-                timestampView.setText(prettyTime.format(date));
+                        java.util.Date date;
 
-                articleSummary.setText(Html.fromHtml(am.getMessage()));
+                        try {
+                            date = new SimpleDateFormat("MMM dd, yyyy").parse(datetime);
+                        } catch (ParseException e) {
 
-                authorView.setText(am.getAuthor().getName());
-                Picasso.with(holder.itemView.getContext()).load(am.getFeaturedMedia()).into(articleImage);
-
-                articleImage.setContentDescription("Featured image for this article.");
-
-                cl.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if(activity != null) {
-
-                            Intent intent = new Intent(activity, ArticleView.class);
-                            intent.putExtra("_id", articles.get(position).get(pos).getId());
-                            intent.putExtra("author", articles.get(position).get(pos).getAuthor().getName());
-                            intent.putExtra("title", articles.get(position).get(pos).getTitle());
-                            intent.putExtra("link", articles.get(position).get(pos).getLink());
-                            activity.startActivity(intent);
-
-                            activity.overridePendingTransition(R.anim.pull_in_left, R.anim.stay);
+                            date = new java.util.Date();
                         }
-                    }
-                });
+                        PrettyTime prettyTime = new PrettyTime();
+                        timestampView.setText(prettyTime.format(date));
 
-                holder.linearLayout.addView(cl);
-            }
+                        articleSummary.setText(Html.fromHtml(am.getMessage()));
+
+                        authorView.setText(am.getAuthor().getName());
+                        Picasso.with(holder.itemView.getContext()).load(am.getFeaturedMedia()).into(articleImage);
+
+                        articleImage.setContentDescription("Featured image for this article.");
+
+                        cl.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if(activity != null) {
+
+                                    Intent intent = new Intent(activity, ArticleView.class);
+                                    intent.putExtra("_id", articles.get(position).get(pos).getId());
+                                    intent.putExtra("author", articles.get(position).get(pos).getAuthor().getName());
+                                    intent.putExtra("title", articles.get(position).get(pos).getTitle());
+                                    intent.putExtra("link", articles.get(position).get(pos).getLink());
+                                    activity.startActivity(intent);
+
+                                    activity.overridePendingTransition(R.anim.pull_in_left, R.anim.stay);
+                                }
+                            }
+                        });
+
+                        ll.addView(cl);
+                    }
+                }
+            });
+
+            holder.linearLayout.addView(ll);
         }
         else{
 
             holder.constraintLayout.setVisibility(View.VISIBLE);
             holder.constraintLayout.findViewById(R.id.refresh).setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -230,7 +248,7 @@ public class ArticlesPagerAdapter extends RecyclerView.Adapter<ArticlesPagerAdap
         ConstraintLayout constraintLayout;
         LinearLayout linearLayout;
 
-        public ViewHolder(@NonNull ScrollView itemView) {
+        ViewHolder(@NonNull NestedScrollView itemView) {
             super(itemView);
 
             constraintLayout = itemView.findViewById(R.id.empty);

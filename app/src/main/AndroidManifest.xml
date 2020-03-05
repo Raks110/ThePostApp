@@ -17,7 +17,7 @@
         <activity
             android:name=".activities.MagazineListActivity"
             android:label="@string/title_activity_magazine_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.MagazineActivity" /> <!-- Firebase Service Definition -->
         <service
             android:name=".firebase.FirebaseService"
