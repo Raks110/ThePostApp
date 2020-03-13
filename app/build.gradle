@@ -8,8 +8,8 @@ android {
         applicationId "com.thepost.app"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 50
-        versionName "2.0-beta"
+        versionCode 65
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //Basic Components
@@ -60,11 +61,11 @@ dependencies {
     implementation 'es.voghdev.pdfviewpager:library:1.1.0'
     implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
 
-
     //Legacy modules
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

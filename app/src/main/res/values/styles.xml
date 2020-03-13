@@ -20,6 +20,7 @@
         <item name="loading">loading_light.json</item>
 
         <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

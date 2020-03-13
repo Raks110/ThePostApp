@@ -30,20 +30,6 @@ import java.util.Random;
 @Keep
 public class ContextUtils {
 
-    private static int lastUsedAnimation;
-
-    /**
-     *
-     * @param context gets the application context to show Toast message
-     * @param message is the message that will display as Toast
-     * @param showTime is the total time the message should be shown for (0 being SHORT and 1 being LONG)
-     */
-
-    public static void makeToast(Context context, String message, int showTime){
-
-        Toast.makeText(context, message, showTime).show();
-    }
-
     /**
      *
      * This function adds an event from the app, into the user's calender app (which the user can choose)

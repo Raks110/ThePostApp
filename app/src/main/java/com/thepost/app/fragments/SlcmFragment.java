@@ -123,7 +123,7 @@ public class SlcmFragment extends Fragment {
 
                             if(!((CheckBox)view.findViewById(R.id.slcmAccept)).isChecked()){
 
-                                ContextUtils.makeToast(getContext(),"Please read and accept our privacy policy before you continue.", 1);
+                                Toast.makeText(getContext(),"Please read and accept our privacy policy before you continue.", Toast.LENGTH_LONG).show();
                                 return;
                             }
 
@@ -211,7 +211,8 @@ public class SlcmFragment extends Fragment {
                             editor.putBoolean("loggedIn", false);
                             editor.apply();
                             view.findViewById(R.id.loadingScreenSlcm).setVisibility(View.GONE);
-                            ContextUtils.makeToast(getContext(), "Ensure your credentials are right or try again later.", 1);
+
+                            Toast.makeText(getContext(), "Ensure your credentials are right or try again later.", Toast.LENGTH_LONG).show();
 
                             view.findViewById(R.id.slcmLoginCard).setVisibility(View.VISIBLE);
                         }
@@ -222,7 +223,13 @@ public class SlcmFragment extends Fragment {
                         editor.putBoolean("loggedIn", false);
                         editor.apply();
                         view.findViewById(R.id.loadingScreenSlcm).setVisibility(View.GONE);
-                        ContextUtils.makeToast(getContext(), "The server seems to be down.", 1);
+
+                        try {
+                            Toast.makeText(getContext(), "The server seems to be down.", Toast.LENGTH_LONG).show();
+                        }
+                        catch(Exception ex){
+                            //empty catch
+                        }
 
                         view.findViewById(R.id.slcmLoginCard).setVisibility(View.VISIBLE);
                     }
@@ -235,7 +242,13 @@ public class SlcmFragment extends Fragment {
                     editor.putBoolean("loggedIn", false);
                     editor.apply();
                     view.findViewById(R.id.loadingScreenSlcm).setVisibility(View.GONE);
-                    ContextUtils.makeToast(getContext(), "The server seems to be down.", 1);
+
+                    try {
+                        Toast.makeText(getContext(), "Some error seems to have occurred. Please try again.", Toast.LENGTH_LONG).show();
+                    }
+                    catch(Exception ex){
+                        //empty catch
+                    }
 
                     view.findViewById(R.id.slcmLoginCard).setVisibility(View.VISIBLE);
                 }
@@ -261,7 +274,12 @@ public class SlcmFragment extends Fragment {
 
                 view.findViewById(R.id.slcmLoginCard).setVisibility(View.VISIBLE);
 
-                ContextUtils.makeToast(getContext(), "We seem to have hit a hiccup. Please try logging in again.", 1);
+                try {
+                    Toast.makeText(getContext(), "We seem to have hit a hiccup. Please try logging in again.", Toast.LENGTH_LONG).show();
+                }
+                catch(Exception ex){
+                    //empty catch
+                }
                 Log.e("error", t.toString());
             }
         });

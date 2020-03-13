@@ -10,7 +10,7 @@
         android:id="@+id/exit"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_margin="16dp"
+        android:padding="16dp"
         android:src="@drawable/ic_cancel"
         android:tint="?attr/tintColor"
         android:elevation="24dp"

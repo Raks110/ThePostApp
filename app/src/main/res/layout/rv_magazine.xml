@@ -49,6 +49,7 @@
         android:layout_marginStart="24dp"
         android:fontFamily="@font/karla_family"
         android:text="Of Marks and Memories"
+        android:layout_marginBottom="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
 </LinearLayout>

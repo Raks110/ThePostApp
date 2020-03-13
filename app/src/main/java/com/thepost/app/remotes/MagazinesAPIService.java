@@ -2,8 +2,8 @@ package com.thepost.app.remotes;
 
 import androidx.annotation.Keep;
 
-import com.thepost.app.models.MagazineModel;
-import com.thepost.app.models.NoticeModel.NoticeModel;
+import com.thepost.app.models.MagazineModel.MagazineModel;
+import com.thepost.app.models.MagazineModel.MagazineWrapperModel;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface MagazinesAPIService {
 
     @GET("/magazines")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<List<MagazineModel>> getMagazines();
+    Call<MagazineWrapperModel> getMagazines();
 }

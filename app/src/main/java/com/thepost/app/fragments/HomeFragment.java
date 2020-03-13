@@ -47,7 +47,8 @@ public class HomeFragment extends Fragment {
     public List<ArticleModel> list;
     public static List<ArticleModel> LIST;
 
-    static List<ArticleModel> eventReports;
+    public static List<ArticleModel> eventReports;
+    public static boolean loaded;
 
     private List<List<ArticleModel>> categorized;
 
@@ -201,6 +202,7 @@ public class HomeFragment extends Fragment {
     private void makeCategories() {
 
         titles = new ArrayList<>();
+        titles.add("Recent");
         titles.add("FAQ");
         titles.add("World");
         titles.add("Interviews");
@@ -263,8 +265,9 @@ public class HomeFragment extends Fragment {
             }
         }
 
-        eventReports.addAll(cats.get(6));
-        EventsFragment.loaded = true;
+        cats.get(0).addAll(LIST.subList(0, 5));
+        eventReports.addAll(cats.get(7));
+        loaded = true;
 
         return cats;
     }

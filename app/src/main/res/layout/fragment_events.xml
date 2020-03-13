@@ -40,14 +40,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/eventsRecycler"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:scrollbars="horizontal"
             android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/mcv_events" />
+            app:layout_constraintTop_toBottomOf="@id/mcv_events"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:id="@+id/emptyEvents"
@@ -133,6 +135,60 @@
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="?attr/loading"
                 app:lottie_loop="true" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/emptyAnimation"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@id/emptyMsg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="empty.json"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/emptyMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:autoLink="web"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.4"
+                android:text="Some error occured while loading events."
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="#6c6c6c"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/emptyAnimation"
+                app:layout_constraintBottom_toTopOf="@id/refresh"/>
+
+            <TextView
+                android:id="@+id/refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:drawableStart="@drawable/ic_refresh"
+                android:drawablePadding="16dp"
+                android:drawableTint="?attr/primaryTextColor"
+                android:padding="12dp"
+                android:text="Refresh"
+                android:textColor="?attr/primaryTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emptyMsg" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

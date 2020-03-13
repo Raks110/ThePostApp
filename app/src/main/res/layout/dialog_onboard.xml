@@ -173,18 +173,22 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/close_onboard"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="6dp"
-            android:textColor="#008500"
-            android:textSize="20sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            app:cornerRadius="8dp"
+            android:background="#008500"
+            android:backgroundTint="#008500"
+            android:textColor="#fff"
+            android:textSize="18sp"
             android:text="Dive Right In"
             android:layout_margin="32dp"
-            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
     </LinearLayout>

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -53,14 +54,7 @@ public class EventsFragment extends Fragment {
 
     private EventsAPIService apiService;
     private View view;
-    private RecyclerView recyclerView;
-    private EventsModel model;
-    private EventsAdapter adapter;
     private List<DataModel> list;
-    private List<DataModel> LIST;
-
-    static boolean loaded;
-
 
     public EventsFragment() {
         // Required empty public constructor
@@ -79,12 +73,11 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        loaded = false;
+        HomeFragment.loaded = false;
 
         view = inflater.inflate(R.layout.fragment_events, container, false);
         apiService = ApiUtils.getEventsAPIService();
 
-        LIST = new ArrayList<>();
         list = new ArrayList<>();
 
         view.findViewById(R.id.loadingCoverage).setVisibility(View.VISIBLE);
@@ -114,8 +107,6 @@ public class EventsFragment extends Fragment {
                     if (response.body().getStatus().equalsIgnoreCase("ok")) {
 
                         list = response.body().getData();
-                        LIST.clear();
-                        LIST.addAll(list);
 
                         List<DataModel> events = new ArrayList<>();
 
@@ -178,7 +169,7 @@ public class EventsFragment extends Fragment {
                     }
                 } else {
 
-                    //TODO: Show when error occurs
+                    showError();
                 }
             }
 
@@ -186,7 +177,7 @@ public class EventsFragment extends Fragment {
             @Override
             public void onFailure(Call<EventsModel> call, Throwable t) {
 
-                //TODO: Show when error occurs
+                showError();
             }
         });
     }
@@ -223,17 +214,18 @@ public class EventsFragment extends Fragment {
                     } catch (Exception e) {
 
                         try {
+
                             ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                             ClipData clipData = ClipData.newPlainText("Registration Link", list.get(position).getFormLink());
 
                             assert clipboardManager != null;
 
                             clipboardManager.setPrimaryClip(clipData);
-                            ContextUtils.makeToast(getActivity(), "There was an error opening your browser. Link has been copied to clipboard.", 1);
+                            Toast.makeText(getContext(), "There was an error opening your browser. Link has been copied to clipboard.", Toast.LENGTH_LONG).show();
 
                         } catch (Exception e1) {
 
-                            ContextUtils.makeToast(getActivity(), "Error opening the registration link.", 1);
+                            Toast.makeText(getContext(), "Error opening the registration link.", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -269,7 +261,12 @@ public class EventsFragment extends Fragment {
             date = new Date();
         }
 
-        String finale = format.format(date);
+        String finale;
+
+        if(date != null)
+            finale = format.format(date);
+        else
+            finale = format.format(new Date());
 
         ((TextView) viewDialog.findViewById(R.id.notice_full_view_timestamp)).setText(finale);
 
@@ -330,9 +327,10 @@ public class EventsFragment extends Fragment {
     }
 
     private class loadCoverage extends AsyncTask<Void, Void, Boolean> {
+
         protected Boolean doInBackground(Void... urls) {
 
-            while(!loaded){
+            while(!HomeFragment.loaded){
                 //Empty loop
             }
             return true;
@@ -352,5 +350,24 @@ public class EventsFragment extends Fragment {
 
             Log.e("Loaded","Async Ran");
         }
+    }
+
+    private void showError(){
+
+        view.findViewById(R.id.eventsRecycler).setVisibility(View.GONE);
+        view.findViewById(R.id.emptyEvents).setVisibility(View.GONE);
+        view.findViewById(R.id.divider).setVisibility(View.GONE);
+        view.findViewById(R.id.eventsRecyclerArticles).setVisibility(View.GONE);
+        view.findViewById(R.id.header).setVisibility(View.GONE);
+
+        view.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+
+        view.findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAllEvents();
+                new loadCoverage().execute();
+            }
+        });
     }
 }

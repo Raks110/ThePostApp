@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.thepost.app.R;
-import com.thepost.app.models.EventsModel.DataModel;
-import com.thepost.app.models.MagazineModel;
+import com.thepost.app.models.MagazineModel.MagazineModel;
 
 import java.util.List;
 

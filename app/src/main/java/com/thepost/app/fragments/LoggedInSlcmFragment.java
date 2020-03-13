@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
@@ -126,7 +127,7 @@ public class LoggedInSlcmFragment extends Fragment {
 
             if (preferences.getBoolean("first_login", true)) {
 
-                ContextUtils.makeToast(getContext(), "Tap on the cards or the times shown to view more info.", 1);
+                Toast.makeText(getContext(), "Tap on the cards or the times shown to view more info.", Toast.LENGTH_LONG).show();
                 preferences.edit().putBoolean("first_login", false).apply();
 
                 TokenAPIService apiService = ApiUtils.getTokenAPIService();
@@ -175,10 +176,14 @@ public class LoggedInSlcmFragment extends Fragment {
             }
         } catch (Exception e) {
 
-            view.findViewById(R.id.logout).setVisibility(View.GONE);
-
             Log.e("SlcmBasicFragment", "Error: " + e.getMessage());
-            ContextUtils.makeToast(getContext(), "Due to security reasons, you will have to login again.", 1);
+
+            MainActivity.logged_static = false;
+
+            if(((BottomNavigationView)getActivity().findViewById(R.id.nav_view)).getSelectedItemId() == R.id.navigation_slcm){
+
+                ((BottomNavigationView)getActivity().findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_slcm);
+            }
 
         }
 
@@ -290,7 +295,7 @@ public class LoggedInSlcmFragment extends Fragment {
 
                                     Log.d("SlcmFragment", "Successfully deleted token");
 
-                                    ContextUtils.makeToast(getContext(), "You have been logged out of SLCM.", 1);
+                                    Toast.makeText(getContext(), "You have been logged out of SLCM.", Toast.LENGTH_LONG).show();
 
                                     SharedPreferences sharedPreferences = activity.getSharedPreferences("thepostapp", Context.MODE_PRIVATE);
                                     sharedPreferences.edit().clear().apply();
@@ -307,7 +312,7 @@ public class LoggedInSlcmFragment extends Fragment {
 
                                     Log.e("SlcmFragment", "Failed to delete token.");
 
-                                    ContextUtils.makeToast(getContext(), "Please check your connection and try to logout again.", 1);
+                                    Toast.makeText(getContext(), "Please check your connection and try to logout again.", Toast.LENGTH_LONG).show();
                                     view.findViewById(R.id.logout).setVisibility(View.VISIBLE);
 
                                 }
@@ -319,7 +324,7 @@ public class LoggedInSlcmFragment extends Fragment {
                             public void onFailure(Call<Object> call, Throwable t) {
 
                                 Log.e("SlcmFragment", "Failed to delete token.");
-                                ContextUtils.makeToast(getContext(), "Please check your connection and try to logout again.", 1);
+                                Toast.makeText(getContext(), "Please check your connection and try to logout again.", Toast.LENGTH_LONG).show();
                                 view.findViewById(R.id.logout).setVisibility(View.VISIBLE);
                             }
                         });

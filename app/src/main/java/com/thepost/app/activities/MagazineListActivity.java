@@ -1,39 +1,30 @@
 package com.thepost.app.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.thepost.app.R;
 import com.thepost.app.adapters.MagazineAdapter;
-import com.thepost.app.models.MagazineModel;
+import com.thepost.app.models.MagazineModel.MagazineModel;
+import com.thepost.app.models.MagazineModel.MagazineWrapperModel;
 import com.thepost.app.remotes.ApiUtils;
 import com.thepost.app.remotes.MagazinesAPIService;
 import com.thepost.app.utils.ClickListener;
 import com.thepost.app.utils.RecyclerTouchListener;
 import com.thepost.app.utils.TinyDB;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,12 +33,16 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class MagazineListActivity extends AppCompatActivity {
 
+    static List<MagazineModel> magazinesQuarterly;
+    static List<MagazineModel> magazinesAnnual;
     static List<MagazineModel> magazines;
     static List<MagazineModel> magazinesStash;
     private RecyclerView allRecyclerView;
     private RecyclerView stashRecyclerView;
+    private RecyclerView annualRecyclerView;
     private MagazineAdapter stashAdapter;
     private MagazineAdapter allAdapter;
+    private MagazineAdapter annualAdapter;
 
     private MagazinesAPIService mAPIService;
 
@@ -83,71 +78,44 @@ public class MagazineListActivity extends AppCompatActivity {
     private List<MagazineModel> getStash(ArrayList<String> stashSet, ArrayList<Integer> stashPages){
 
         List<MagazineModel> stash = new ArrayList<>();
+        magazinesAnnual = new ArrayList<>();
+        magazinesQuarterly = new ArrayList<>();
 
-        for(int i=0;i<stashSet.size();i++){
+        if(stashSet != null || stashPages != null) {
+            for (int i = 0; i < stashSet.size(); i++) {
 
-            for(int j=0;j<magazines.size();j++){
+                for (int j = 0; j < magazines.size(); j++) {
 
-                MagazineModel model = magazines.get(j);
+                    MagazineModel model = magazines.get(j);
 
-                if(model.getId().equals(stashSet.get(i))){
+                    if (model.getId().equals(stashSet.get(i))) {
 
-                    model.setPageNum(stashPages.get(i));
-                    stash.add(model);
-                }
-                else{
+                        //TODO: make the page number live so that user can resume reading from where he/she stopped (pages list has helpful data)
 
-                    model.setPageNum(0);
+                        model.setPageNum(0);
+                        stash.add(model);
+
+                    } else {
+
+                        model.setPageNum(0);
+                    }
                 }
             }
         }
 
+        for(int j=0;j<magazines.size();j++){
+
+            MagazineModel model = magazines.get(j);
+
+            if(model.getContent().toLowerCase().trim().equals("annual")){
+                magazinesAnnual.add(model);
+            }
+            else{
+                magazinesQuarterly.add(model);
+            }
+        }
+
         return stash;
-    }
-
-    private void initList(){
-
-        magazines = new ArrayList<>();
-
-        MagazineModel model = new MagazineModel();
-        model.setTitle("Of Marks & Memories");
-        model.setPdfLink("https://firebasestorage.googleapis.com/v0/b/mit-post-244d7.appspot.com/o/Of%20Marks%20%26%20Memories%E2%80%94A%20Freshers%E2%80%99%20Guide%20to%20Manipal_compressed.pdf?alt=media&token=e2430ea0-7574-485f-9017-f45c43df8d58");
-        model.setDate("2019-7-30");
-        model.setId("01");
-        model.setImageURL("https://i.ibb.co/zXdHt0V/Document-page-001.jpg");
-        model.setContent("Issue 4");
-
-        magazines.add(model);
-
-        MagazineModel model2 = new MagazineModel();
-        model2.setTitle("Year 60, and Counting");
-        model2.setPdfLink("https://firebasestorage.googleapis.com/v0/b/mit-post-244d7.appspot.com/o/Mag3_compressed.pdf?alt=media&token=f0840a67-27a5-42f9-b1bd-d076fc07e6db");
-        model2.setDate("2019-2-30");
-        model2.setId("02");
-        model2.setImageURL("https://i.ibb.co/VJRpQdq/Mag3-compressed-page-001.jpg");
-        model2.setContent("Issue 3");
-
-        magazines.add(model2);
-
-        MagazineModel model4 = new MagazineModel();
-        model4.setTitle("Year 60, and Counting");
-        model4.setPdfLink("https://firebasestorage.googleapis.com/v0/b/mit-post-244d7.appspot.com/o/Mag3_compressed.pdf?alt=media&token=f0840a67-27a5-42f9-b1bd-d076fc07e6db");
-        model4.setDate("2019-2-30");
-        model4.setId("03");
-        model4.setImageURL("https://i.ibb.co/VJRpQdq/Mag3-compressed-page-001.jpg");
-        model4.setContent("Issue 3");
-
-        magazines.add(model4);
-
-        MagazineModel model3 = new MagazineModel();
-        model3.setTitle("Of Marks & Memories");
-        model3.setPdfLink("https://firebasestorage.googleapis.com/v0/b/mit-post-244d7.appspot.com/o/Of%20Marks%20%26%20Memories%E2%80%94A%20Freshers%E2%80%99%20Guide%20to%20Manipal_compressed.pdf?alt=media&token=e2430ea0-7574-485f-9017-f45c43df8d58");
-        model3.setDate("2019-7-30");
-        model3.setId("04");
-        model3.setImageURL("https://i.ibb.co/zXdHt0V/Document-page-001.jpg");
-        model3.setContent("Issue 4");
-
-        magazines.add(model3);
     }
 
     @Override
@@ -164,15 +132,17 @@ public class MagazineListActivity extends AppCompatActivity {
 
     private void getAllMagazines() {
 
-        mAPIService.getMagazines().enqueue(new Callback<List<MagazineModel>>() {
+        mAPIService.getMagazines().enqueue(new Callback<MagazineWrapperModel>() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             @EverythingIsNonNull
-            public void onResponse(Call<List<MagazineModel>> call, Response<List<MagazineModel>> response) {
+            public void onResponse(Call<MagazineWrapperModel> call, Response<MagazineWrapperModel> response) {
 
                 if (response.isSuccessful()) {
 
-                    magazines = response.body();
+                    MagazineWrapperModel model = response.body();
+
+                    magazines = model.getData();
 
                     if(magazines == null){
 
@@ -183,13 +153,13 @@ public class MagazineListActivity extends AppCompatActivity {
                     ArrayList<String> stash = tinyDB.getListString("stash");
                     ArrayList<Integer> pages = tinyDB.getListInt("pages");
 
+                    magazinesStash = getStash(stash, pages);
+
                     if(stash == null || stash.size() == 0 || pages == null || pages.size() == 0){
 
                         findViewById(R.id.yourStash).setVisibility(View.GONE);
                     }
                     else {
-
-                        magazinesStash = getStash(stash, pages);
 
                         findViewById(R.id.yourStash).setVisibility(View.VISIBLE);
 
@@ -222,7 +192,7 @@ public class MagazineListActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MagazineListActivity.this, MagazineActivity.class);
 
                                 intent.putExtra("id", magazinesStash.get(position).getId());
-                                intent.putExtra("isStash", true);
+                                intent.putExtra("isStash", 0);
                                 intent.putExtra("position", position);
 
                                 startActivity(intent);
@@ -237,8 +207,8 @@ public class MagazineListActivity extends AppCompatActivity {
 
                     }
 
-                    allRecyclerView = findViewById(R.id.olderMagazinesRecycler);
-                    allAdapter = new MagazineAdapter(magazines);
+                    allRecyclerView = findViewById(R.id.quarterlyMagazinesRecycler);
+                    allAdapter = new MagazineAdapter(magazinesQuarterly);
 
                     allRecyclerView.setLayoutManager(new GridLayoutManager(MagazineListActivity.this, 2));
                     allRecyclerView.setAdapter(allAdapter);
@@ -247,29 +217,32 @@ public class MagazineListActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view, int position) {
 
-
                             ArrayList<String> stash = tinyDB.getListString("stash");
                             ArrayList<Integer> pages = tinyDB.getListInt("pages");
 
-                            if(stash == null){
+                            if(!isFoundInStash(magazinesQuarterly.get(position), stash)) {
 
-                                stash = new ArrayList<>();
+                                if (stash == null) {
+
+                                    stash = new ArrayList<>();
+                                }
+                                if (pages == null) {
+
+                                    pages = new ArrayList<>();
+                                }
+
+                                stash.add(magazinesQuarterly.get(position).getId());
+                                pages.add(magazinesQuarterly.get(position).getPageNum());
+
+                                tinyDB.putListString("stash", stash);
+                                tinyDB.putListInt("pages", pages);
+
                             }
-                            if(pages == null){
-
-                                pages = new ArrayList<>();
-                            }
-
-                            stash.add(magazines.get(position).getId());
-                            pages.add(magazines.get(position).getPageNum());
-
-                            tinyDB.putListString("stash", stash);
-                            tinyDB.putListInt("pages", pages);
 
                             Intent intent = new Intent(MagazineListActivity.this, MagazineActivity.class);
 
-                            intent.putExtra("id", magazines.get(position).getId());
-                            intent.putExtra("isStash", false);
+                            intent.putExtra("id", magazinesQuarterly.get(position).getId());
+                            intent.putExtra("isStash", 1);
                             intent.putExtra("position", position);
 
                             startActivity(intent);
@@ -282,6 +255,55 @@ public class MagazineListActivity extends AppCompatActivity {
                         }
                     }));
 
+                    annualRecyclerView = findViewById(R.id.annualMagazinesRecycler);
+                    annualAdapter = new MagazineAdapter(magazinesAnnual);
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(MagazineListActivity.this, LinearLayoutManager.HORIZONTAL, false);
+
+                    annualRecyclerView.setLayoutManager(layoutManager);
+                    annualRecyclerView.setAdapter(annualAdapter);
+
+                    annualRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(MagazineListActivity.this, annualRecyclerView, new ClickListener() {
+                        @Override
+                        public void onClick(View view, int position) {
+
+                            ArrayList<String> stash = tinyDB.getListString("stash");
+                            ArrayList<Integer> pages = tinyDB.getListInt("pages");
+
+
+                            if(!isFoundInStash(magazinesAnnual.get(position), stash)) {
+
+                                if (stash == null) {
+
+                                    stash = new ArrayList<>();
+                                }
+                                if (pages == null) {
+
+                                    pages = new ArrayList<>();
+                                }
+
+                                stash.add(magazinesAnnual.get(position).getId());
+                                pages.add(magazinesAnnual.get(position).getPageNum());
+
+                                tinyDB.putListString("stash", stash);
+                                tinyDB.putListInt("pages", pages);
+                            }
+
+                            Intent intent = new Intent(MagazineListActivity.this, MagazineActivity.class);
+
+                            intent.putExtra("id", magazinesAnnual.get(position).getId());
+                            intent.putExtra("isStash", 2);
+                            intent.putExtra("position", position);
+
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.pull_in_left, R.anim.stay);
+                        }
+
+                        @Override
+                        public void onLongClick(View view, int position) {
+
+                        }
+                    }));
 
                     showContent();
 
@@ -293,9 +315,10 @@ public class MagazineListActivity extends AppCompatActivity {
 
             @Override
             @EverythingIsNonNull
-            public void onFailure(Call<List<MagazineModel>> call, Throwable t) {
+            public void onFailure(Call<MagazineWrapperModel> call, Throwable t) {
 
                 showError("Check your internet connection and try again.");
+                Log.e("Error in Magazines", t.getMessage());
             }
         });
     }
@@ -309,7 +332,8 @@ public class MagazineListActivity extends AppCompatActivity {
         findViewById(R.id.loading).setVisibility(View.VISIBLE);
         findViewById(R.id.empty).setVisibility(View.GONE);
         findViewById(R.id.yourStash).setVisibility(View.GONE);
-        findViewById(R.id.olderMagazines).setVisibility(View.GONE);
+        findViewById(R.id.quarterlyMagazines).setVisibility(View.GONE);
+        findViewById(R.id.annualMagazines).setVisibility(View.GONE);
     }
 
     /**
@@ -320,7 +344,8 @@ public class MagazineListActivity extends AppCompatActivity {
 
         findViewById(R.id.loading).setVisibility(View.GONE);
         findViewById(R.id.empty).setVisibility(View.GONE);
-        findViewById(R.id.olderMagazines).setVisibility(View.VISIBLE);
+        findViewById(R.id.quarterlyMagazines).setVisibility(View.VISIBLE);
+        findViewById(R.id.annualMagazines).setVisibility(View.VISIBLE);
     }
 
     /**
@@ -331,8 +356,22 @@ public class MagazineListActivity extends AppCompatActivity {
 
         findViewById(R.id.loading).setVisibility(View.GONE);
         findViewById(R.id.yourStash).setVisibility(View.GONE);
-        findViewById(R.id.olderMagazines).setVisibility(View.GONE);
+        findViewById(R.id.annualMagazines).setVisibility(View.GONE);
+        findViewById(R.id.quarterlyMagazines).setVisibility(View.GONE);
         ((TextView) findViewById(R.id.emptyMsg)).setText(message);
         findViewById(R.id.empty).setVisibility(View.VISIBLE);
+    }
+
+    private boolean isFoundInStash(MagazineModel magazine, ArrayList<String> stash) {
+
+        for(int i=0;i<stash.size();i++){
+
+            if(stash.get(i).equals(magazine.getId())){
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

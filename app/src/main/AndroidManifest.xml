@@ -17,6 +17,7 @@
         <activity
             android:name=".activities.MagazineListActivity"
             android:label="@string/title_activity_magazine_list"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.MagazineActivity" /> <!-- Firebase Service Definition -->
         <service
@@ -58,12 +59,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FullImageActivity"
-            android:label="Full Image View"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.SettingsActivity"
-            android:label="Settings"
-            android:screenOrientation="portrait" />
+            android:label="Full Image View"/>
     </application>
 
 </manifest>

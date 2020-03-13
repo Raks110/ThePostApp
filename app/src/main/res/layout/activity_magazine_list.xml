@@ -46,8 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/header"
@@ -85,41 +84,73 @@
 
         </LinearLayout>
 
+
         <LinearLayout
-            android:id="@+id/olderMagazines"
+            android:id="@+id/annualMagazines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/header3"
+                android:id="@+id/headerAnnual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/karla_family"
                 android:paddingTop="32dp"
                 android:paddingBottom="6dp"
-                android:text="All our Magazines"
+                android:text="Annual Magazines"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/emptyEvents" />
+                android:textSize="16sp" />
 
             <View
-                android:id="@+id/divider3"
+                android:id="@+id/dividerAnnual"
                 android:layout_width="32dp"
                 android:layout_height="2dp"
-                android:background="?attr/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header" />
+                android:background="?attr/colorPrimary" />
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/olderMagazinesRecycler"
+                android:id="@+id/annualMagazinesRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingEnd="32dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quarterlyMagazines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/headerQuarterly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karla_family"
+                android:paddingTop="32dp"
+                android:paddingBottom="6dp"
+                android:text="Quarterly Magazines"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/dividerQuarterly"
+                android:layout_width="32dp"
+                android:layout_height="2dp"
+                android:background="?attr/colorPrimary" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/quarterlyMagazinesRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

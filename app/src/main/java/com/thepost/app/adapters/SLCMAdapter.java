@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -18,18 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.orhanobut.dialogplus.DialogPlus;
 import com.squareup.picasso.Picasso;
-import com.thepost.app.MainActivity;
 import com.thepost.app.R;
 import com.thepost.app.models.SlcmModel.BasicModel.Attendance;
 import com.thepost.app.models.SlcmModel.BasicModel.InternalMarks;
-import com.thepost.app.utils.ContextUtils;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.thepost.app.utils.ContextUtils.makeToast;
 
 @Keep
 public class SLCMAdapter extends RecyclerView.Adapter<SLCMAdapter.ViewHolder> {

@@ -16,7 +16,7 @@ import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.listener.OnTapListener;
 import com.google.android.material.card.MaterialCardView;
 import com.thepost.app.R;
-import com.thepost.app.models.MagazineModel;
+import com.thepost.app.models.MagazineModel.MagazineModel;
 import com.thepost.app.utils.TinyDB;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -34,7 +34,7 @@ import es.voghdev.pdfviewpager.library.remote.DownloadFile;
 public class MagazineActivity extends AppCompatActivity implements DownloadFile.Listener{
 
     private boolean showing;
-    private boolean isStash;
+    private int isStash;
     private int position;
     private int page;
 
@@ -51,6 +51,8 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magazine);
 
+        ((TextView) findViewById(R.id.progress)).setText("");
+
         showing = false;
         isLoaded = false;
 
@@ -58,7 +60,7 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
 
         Intent intent = getIntent();
 
-        isStash = intent.getBooleanExtra("isStash", false);
+        isStash = intent.getIntExtra("isStash", 2);
         position = intent.getIntExtra("position", 0);
 
         url = getList().get(position).getPdfLink();
@@ -101,8 +103,6 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
         findViewById(R.id.pdfView).setVisibility(View.VISIBLE);
 
         pdfView = findViewById(R.id.pdfView);
-
-        Log.e("Page Loading", page+"");
 
         pdfView.fromFile(new File(destinationPath))
                 .swipeHorizontal(true)
@@ -149,7 +149,10 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
         // You will get download progress here
         // Always on UI Thread so feel free to update your views here
 
-        ((TextView) findViewById(R.id.progress)).setText((progress/total)*100 + "");
+        if((progress*100/total) <= 100 && (progress*100/total) >= 0)
+            ((TextView) findViewById(R.id.progress)).setText("Loaded " + (progress*100/total) + " %");
+        else
+            ((TextView) findViewById(R.id.progress)).setText("");
     }
 
     @Override
@@ -193,11 +196,14 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
 
     private List<MagazineModel> getList(){
 
-        if(isStash){
+        if(isStash == 0){
             return MagazineListActivity.magazinesStash;
         }
+        else if(isStash == 1){
+            return MagazineListActivity.magazinesQuarterly;
+        }
         else{
-            return MagazineListActivity.magazines;
+            return MagazineListActivity.magazinesAnnual;
         }
     }
 
@@ -223,7 +229,7 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
 
     private void changePageNumber(){
 
-        ((TextView)findViewById(R.id.currentPage)).setText(pdfView.getCurrentPage()+"");
+        ((TextView)findViewById(R.id.currentPage)).setText(pdfView.getCurrentPage() + 1 + "");
     }
 
     private void exitMagazineView(){
@@ -235,7 +241,7 @@ public class MagazineActivity extends AppCompatActivity implements DownloadFile.
             ArrayList<String> stash = tinyDB.getListString("stash");
             ArrayList<Integer> pages = tinyDB.getListInt("pages");
 
-            if (isStash) {
+            if (isStash == 0) {
 
                 pages.remove(position);
                 pages.add(position, pdfView.getCurrentPage());

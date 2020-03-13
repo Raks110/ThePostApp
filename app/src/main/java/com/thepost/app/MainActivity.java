@@ -4,18 +4,17 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,17 +27,13 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.GridHolder;
 import com.orhanobut.dialogplus.OnDismissListener;
-import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 import com.thepost.app.activities.AboutActivity;
 import com.thepost.app.activities.FullImageActivity;
-import com.thepost.app.activities.MagazineActivity;
 import com.thepost.app.activities.MagazineListActivity;
 import com.thepost.app.activities.PrivacyActivity;
-import com.thepost.app.activities.SettingsActivity;
 import com.thepost.app.adapters.OptionsAdapter;
 import com.thepost.app.fragments.EventsFragment;
 import com.thepost.app.fragments.HomeFragment;
@@ -46,23 +41,24 @@ import com.thepost.app.fragments.LoggedInSlcmFragment;
 import com.thepost.app.fragments.NoticesFragment;
 import com.thepost.app.fragments.SlcmFragment;
 import com.thepost.app.models.NoticeModel.NoticeDataModel;
-import com.thepost.app.models.SlcmModel.BasicModel.SlcmBasicModel;
 import com.thepost.app.remotes.ApiUtils;
 import com.thepost.app.remotes.TokenAPIService;
 import com.thepost.app.utils.ClickListener;
 import com.thepost.app.utils.ContextUtils;
 import com.thepost.app.utils.RecyclerTouchListener;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,8 +72,6 @@ import okhttp3.internal.annotations.EverythingIsNonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.thepost.app.utils.ContextUtils.getBottomPaddingForTheme;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -113,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
                     if(findViewById(R.id.emptyEventsAnimation) != null && findViewById(R.id.emptyEventsAnimation).getVisibility() == View.VISIBLE) {
                         ((LottieAnimationView) findViewById(R.id.emptyEventsAnimation)).setProgress(0.0f);
                         ((LottieAnimationView) findViewById(R.id.emptyEventsAnimation)).playAnimation();
+                    }
+                    if(findViewById(R.id.loadingCoverage) != null && findViewById(R.id.loadingCoverage).getVisibility() == View.VISIBLE){
+                        if(HomeFragment.loaded){
+
+                            fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction3.replace(R.id.eventsContainer, EventsFragment.newInstance()).commit();
+                        }
                     }
                     return true;
 
@@ -180,6 +181,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int theme = getSharedPreferences("thepostapp", Context.MODE_PRIVATE).getInt("theme", 2);
+
+        switch (theme) {
+
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+
+            case 2:
+            default:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                }
+                break;
+            case 3:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                break;
+        }
+
         setContentView(R.layout.activity_main);
 
         setFragmentsInFrames();
@@ -223,6 +251,9 @@ public class MainActivity extends AppCompatActivity {
 
         drawables.add(R.drawable.ic_calendar);
         titles.add("Academic Calendar");
+
+        drawables.add(R.drawable.ic_delete);
+        titles.add("Empty Cache");
     }
 
     /**
@@ -306,6 +337,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(R.anim.pull_in_left, R.anim.stay);
                         break;
+
+                    case 7:
+                        deleteCache(MainActivity.this);
+                        break;
                 }
             }
 
@@ -315,49 +350,150 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
+        List<String> themes = new ArrayList<>();
+        themes.add("Light Always");
+        themes.add("Dark Always");
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            themes.add("System Default");
+        }
+
+        themes.add("Set by Battery Saver");
+
+        Spinner spinner = view.findViewById(R.id.themeValue);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, themes);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                getSharedPreferences("thepostapp", Context.MODE_PRIVATE).edit().putInt("theme", position).apply();
+
+                switch (position) {
+
+                    case 0:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        break;
+
+                    case 1:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        break;
+
+                    case 2:
+                    default:
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        }
+                        else{
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                        }
+                        break;
+                    case 3:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinner.setAdapter(adapter1);
+
+        int pos;
+
+        switch (AppCompatDelegate.getDefaultNightMode()) {
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                pos = 0;
+                break;
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                pos = 1;
+                break;
+            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+            default:
+                pos = 2;
+                break;
+
+            case AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                    pos = 3;
+                }
+                else{
+                    pos = 2;
+                }
+        }
+
+        spinner.setSelection(pos);
+
         dialogPlus.show();
+    }
+
+    public boolean isHardwareSupported(Context context) {
+        FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(context);
+        return fingerprintManager.isHardwareDetected();
+    }
+
+
+    public boolean isFingerprintAvailable(Context context) {
+        FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(context);
+        return fingerprintManager.hasEnrolledFingerprints();
+    }
+
+    public boolean isBiometricPromptEnabled() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P);
     }
 
     private void checkCredentials(){
 
+        if(isBiometricPromptEnabled() && isFingerprintAvailable(getApplicationContext()) && isHardwareSupported(getApplicationContext())) {
 
-        executor = ContextCompat.getMainExecutor(getApplicationContext());
-        biometricPrompt = new BiometricPrompt(MainActivity.this,
-                executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode,
-                                              @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
+            executor = ContextCompat.getMainExecutor(getApplicationContext());
+            biometricPrompt = new BiometricPrompt(MainActivity.this,
+                    executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode,
+                                                  @NonNull CharSequence errString) {
+                    super.onAuthenticationError(errorCode, errString);
 
-                Toast.makeText(getApplicationContext(), "You will need to verify yourself before accessing SLCM content.", Toast.LENGTH_LONG).show();
-                ((BottomNavigationView) findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_home);
-            }
+                    Toast.makeText(getApplicationContext(), "You will need to verify yourself before accessing SLCM content.", Toast.LENGTH_LONG).show();
+                    ((BottomNavigationView) findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_home);
+                }
 
-            @Override
-            public void onAuthenticationSucceeded(
-                    @NonNull BiometricPrompt.AuthenticationResult result) {
+                @Override
+                public void onAuthenticationSucceeded(
+                        @NonNull BiometricPrompt.AuthenticationResult result) {
 
-                super.onAuthenticationSucceeded(result);
-                fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction4.replace(R.id.loggedSlcmContainer, LoggedInSlcmFragment.newInstance()).commitAllowingStateLoss();
-                initializeFragment(R.id.loggedSlcmContainer);
-            }
+                    super.onAuthenticationSucceeded(result);
+                    fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction4.replace(R.id.loggedSlcmContainer, LoggedInSlcmFragment.newInstance()).commitAllowingStateLoss();
+                    initializeFragment(R.id.loggedSlcmContainer);
+                }
 
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
+                @Override
+                public void onAuthenticationFailed() {
+                    super.onAuthenticationFailed();
 
-                Toast.makeText(getApplicationContext(), "You will need to verify yourself before accessing SLCM content.", Toast.LENGTH_LONG).show();
-                ((BottomNavigationView) findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_home);
-            }
-        });
+                    Toast.makeText(getApplicationContext(), "You will need to verify yourself before accessing SLCM content.", Toast.LENGTH_LONG).show();
+                    ((BottomNavigationView) findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_home);
+                }
+            });
 
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Please Confirm your Identity to access SLCM")
-                .setDeviceCredentialAllowed(true)
-                .build();
+            promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Please Confirm your Identity to access SLCM")
+                    .setDeviceCredentialAllowed(true)
+                    .build();
 
-        biometricPrompt.authenticate(promptInfo);
+            biometricPrompt.authenticate(promptInfo);
+        }
+        else{
+
+            fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction4.replace(R.id.loggedSlcmContainer, LoggedInSlcmFragment.newInstance()).commitAllowingStateLoss();
+            initializeFragment(R.id.loggedSlcmContainer);
+        }
 
     }
 
@@ -668,5 +804,30 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+            Toast.makeText(getApplicationContext(), "Cache storage of The Post App emptied.", Toast.LENGTH_LONG).show();
+        } catch (Exception e) { e.printStackTrace();}
+    }
+
+    public boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 }
